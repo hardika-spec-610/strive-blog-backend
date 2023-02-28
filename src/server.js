@@ -9,7 +9,7 @@ const port = 3001;
 server.use(Express.json()); // If you don't add this line BEFORE the endpoints all request bodies will be UNDEFINED!!!!!!!!!!!!!!!
 
 // ************************** ENDPOINTS ***********************
-server.use("/authors ", authorsRouter);
+server.use("/authors", authorsRouter);
 
 server.listen(port, () => {
   console.table(listEndpoints(server));
