@@ -44,9 +44,13 @@ authorsRouter.post("/", (req, res) => {
   // 1. Read the request body
   console.log("REQUEST BODY:", req.body); // DO NOT FORGET TO ADD EXPRESS.JSON INTO SERVER.JS!!!!!!!!!!!!!!!!
   // 2. Add some server generated info (unique id, createdAt, ...)
-  //   const { name, surname, email, DOB, avatar } = req.body;
+  const { name, surname, email, DOB, avatar } = req.body;
   const newAuthor = {
-    ...req.body,
+    name,
+    surname,
+    email,
+    DOB,
+    avatar: `https://ui-avatars.com/api/?name=${name}+${surname}`,
     createdAt: new Date(),
     updatedAt: new Date(),
     id: uniqid(),
@@ -105,7 +109,11 @@ authorsRouter.get("/:authorId", (req, res) => {
   const author = authorsArray.find(
     (author) => author.id === req.params.authorId
   );
-
+  if (!author) {
+    res
+      .status(404)
+      .send({ message: `Autgor with ${req.params.authorId} is not found` });
+  }
   // 4. Send the found user as a response
   res.send(author);
 });
@@ -119,6 +127,11 @@ authorsRouter.put("/:authorId", (req, res) => {
   const index = authorsArray.findIndex(
     (author) => author.id === req.params.authorId
   );
+  if (!index == -1) {
+    res
+      .status(404)
+      .send({ message: `Autgor with ${req.params.authorId} is not found` });
+  }
   const oldAuthor = authorsArray[index];
   const updatedAuthor = { ...oldAuthor, ...req.body, updatedAt: new Date() };
   authorsArray[index] = updatedAuthor;
