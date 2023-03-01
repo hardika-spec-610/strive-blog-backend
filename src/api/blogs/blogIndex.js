@@ -68,6 +68,22 @@ blogsRouter.get("/", async (req, res, next) => {
     next(createHttpError(500, `Server side error`));
   }
 });
+blogsRouter.get("/search", async (req, res, next) => {
+  try {
+    // throw new Error("KABOOOOOOOOOOOOOOOOOOM!")
+    const blogs = getBlogs();
+    if (req.query && req.query.title) {
+      const filteredBlogPost = blogs.filter(
+        (blog) => blog.title === req.query.title
+      );
+      res.send(filteredBlogPost);
+    } else {
+      res.send(blogs);
+    }
+  } catch (error) {
+    next(createHttpError(500, `Server side error`));
+  }
+});
 
 blogsRouter.get("/:blogId", async (req, res, next) => {
   try {
