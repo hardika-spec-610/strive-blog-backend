@@ -27,6 +27,12 @@ const blogPostSchema = {
         errorMessage: "Name is a mandatory field and needs to be a string!",
       },
     },
+    avatar: {
+      in: ["body"],
+      isString: {
+        errorMessage: "Avatar is a mandatory field and needs to be a string!",
+      },
+    },
   },
   // email: {
   //   in: ["body"],
