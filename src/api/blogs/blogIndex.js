@@ -16,6 +16,7 @@ import { fileURLToPath } from "url"; // CORE MODULE
 import { dirname, join } from "path"; // CORE MODULE
 import uniqid from "uniqid";
 import createHttpError from "http-errors";
+import { checkBlogsSchema, triggerBadRequest } from "./validation.js";
 
 const blogsRouter = Express.Router();
 
@@ -27,25 +28,30 @@ const getBlogs = () => JSON.parse(fs.readFileSync(bolgsJSONPath));
 const writeBlogs = (blogsArray) =>
   fs.writeFileSync(bolgsJSONPath, JSON.stringify(blogsArray));
 
-blogsRouter.post("/", async (req, res, next) => {
-  const { category, title, cover, readTime, author, content } = req.body;
-  const newBlog = {
-    category,
-    title,
-    cover,
-    readTime,
-    author,
-    content,
-    _id: uniqid(),
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  };
+blogsRouter.post(
+  "/",
+  checkBlogsSchema,
+  triggerBadRequest,
+  async (req, res, next) => {
+    const { category, title, cover, readTime, author, content } = req.body;
+    const newBlog = {
+      category,
+      title,
+      cover,
+      readTime,
+      author,
+      content,
+      _id: uniqid(),
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
 
-  const blogsArray = getBlogs();
-  blogsArray.push(newBlog);
-  writeBlogs(blogsArray);
-  res.status(201).send(blogsArray);
-});
+    const blogsArray = getBlogs();
+    blogsArray.push(newBlog);
+    writeBlogs(blogsArray);
+    res.status(201).send(blogsArray);
+  }
+);
 
 blogsRouter.get("/", async (req, res, next) => {
   try {
