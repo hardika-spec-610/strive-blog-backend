@@ -1,22 +1,22 @@
 [
     {
         "createdAt": "2023-02-28T16:04:31.962Z",
-        "updatedAt": "2023-02-28T16:41:21.289Z",
+        "updatedAt": "2023-03-02T19:51:10.480Z",
         "id": "61fghevwleofvyai",
         "name": "test4",
         "surname": "do",
         "email": "ha@exas<dassadmple.com",
         "DOB": "7/10/1996",
-        "avatar": "http://localhost:3001/img/authors/${filename}"
+        "avatar": "http://localhost:3001/img/authors/61fghevwleofvyai.jpg"
     },
     {
         "name": "test4vgh ",
         "surname": "dchb no",
         "email": "ha@exa.com",
         "DOB": "7/10/1996",
-        "avatar": "http://localhost:3001/img/authors/${filename}",
+        "avatar": "http://localhost:3001/img/authors/61fghao4leoh8b72.jpg",
         "createdAt": "2023-02-28T16:42:08.173Z",
-        "updatedAt": "2023-02-28T16:42:08.173Z",
+        "updatedAt": "2023-03-02T19:56:16.746Z",
         "id": "61fghao4leoh8b72"
     },
     {
@@ -24,9 +24,9 @@
         "surname": "moradiyao",
         "email": "ha@exa.com",
         "DOB": "7/10/1996",
-        "avatar": "http://localhost:3001/img/authors/${filename}",
+        "avatar": "http://localhost:3001/img/authors/61fghao4leohb2jc.jfif",
         "createdAt": "2023-02-28T16:44:16.920Z",
-        "updatedAt": "2023-02-28T16:44:16.920Z",
+        "updatedAt": "2023-03-02T19:56:35.498Z",
         "id": "61fghao4leohb2jc"
     },
     {
@@ -34,7 +34,7 @@
         "surname": "Moradiya",
         "email": "hardika@example.com",
         "DOB": "6/10/1996",
-        "avatar": "http://localhost:3001/img/authors/${filename}",
+        "avatar": "",
         "createdAt": "2023-03-01T17:04:35.029Z",
         "updatedAt": "2023-03-01T17:04:35.029Z",
         "id": "61fghnu8lepxh13q"
@@ -44,9 +44,9 @@
         "surname": "Moradiya",
         "email": "hardika@example.com",
         "DOB": "6/10/1996",
-        "avatar": "https://ui-avatars.com/api/?background=0D8ABC&color=fff",
+        "avatar": "http://localhost:3001/img/authors/61fghdjclepy30wu.jpg",
         "createdAt": "2023-03-01T17:21:41.213Z",
-        "updatedAt": "2023-03-01T17:21:41.213Z",
+        "updatedAt": "2023-03-02T19:56:49.925Z",
         "id": "61fghdjclepy30wu"
     }
 ]

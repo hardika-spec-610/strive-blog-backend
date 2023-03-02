@@ -20,23 +20,37 @@ const blogPostSchema = {
       errorMessage: "Cover is a mandatory field and needs to be a string!",
     },
   },
-  author: {
-    name: {
-      in: ["body"],
-      isString: {
-        errorMessage: "Name is a mandatory field and needs to be a string!",
-      },
+  "author.name": {
+    in: ["body"],
+    isString: {
+      errorMessage: "Name is a mandatory field and needs to be a string!",
     },
-    avatar: {
-      in: ["body"],
-      isString: {
-        errorMessage: "Avatar is a mandatory field and needs to be a string!",
-      },
+  },
+  "author.avatar": {
+    in: ["body"],
+    isString: {
+      errorMessage: "Avatar is a mandatory field and needs to be a string!",
+    },
+  },
+};
+
+const commentSchema = {
+  authorName: {
+    in: ["body"],
+    isString: {
+      errorMessage: "authorname is a mandatory field and needs to be a string",
+    },
+  },
+  text: {
+    in: ["body"],
+    isString: {
+      errorMessage: "text is a mandatory field and needs to be a string",
     },
   },
 };
 
 export const checkBlogsSchema = checkSchema(blogPostSchema); // this function creates a middleware
+export const checkCommentSchema = checkSchema(commentSchema);
 
 export const triggerBadRequest = (req, res, next) => {
   // 1. Check if checkBooksSchema has found any error in req.body
