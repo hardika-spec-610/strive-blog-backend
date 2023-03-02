@@ -2,7 +2,7 @@
     {
         "category": "scifi",
         "title": "the Principal Upanishads",
-        "cover": "https://picsum.photos/seed/picsum/200/300",
+        "cover": "http://localhost:3001/img/blogPosts/${filename}",
         "readTime": {
             "value": 2,
             "unit": "5 hours"
@@ -14,12 +14,20 @@
         "content": "first read",
         "_id": "61fghhwcleprb6gu",
         "createdAt": "2023-03-01T14:12:04.350Z",
-        "updatedAt": "2023-03-01T15:41:11.950Z"
+        "updatedAt": "2023-03-01T15:41:11.950Z",
+        "comments": [
+            {
+                "_id": "61fghj8sler6tnli",
+                "createdAtComment": "2023-03-02T14:14:06.773Z"
+            },
+            {},
+            {}
+        ]
     },
     {
         "category": "Vedic",
         "title": " Bhagavata Purana",
-        "cover": "https://picsum.photos/seed/picsum/200/300",
+        "cover": "http://localhost:3001/img/blogPosts/${filename}",
         "readTime": {
             "value": 2,
             "unit": "5 hours"
@@ -31,12 +39,19 @@
         "content": "first read",
         "_id": "61fghi9kleprcf0u",
         "createdAt": "2023-03-01T14:13:02.093Z",
-        "updatedAt": "2023-03-01T15:43:14.809Z"
+        "updatedAt": "2023-03-01T15:43:14.809Z",
+        "comments": [
+            {},
+            {
+                "_id": "61fghj8sler6w0mt",
+                "createdAtComment": "2023-03-02T14:15:56.981Z"
+            }
+        ]
     },
     {
         "category": "Romantic",
         "title": "Conjuring",
-        "cover": "https://picsum.photos/seed/picsum/200/300",
+        "cover": "http://localhost:3001/img/blogPosts/${filename}",
         "readTime": {
             "value": 2,
             "unit": "5 hours"
@@ -48,6 +63,71 @@
         "content": "horror",
         "_id": "61fgh85glepughkg",
         "createdAt": "2023-03-01T15:40:10.863Z",
-        "updatedAt": "2023-03-01T15:40:10.863Z"
+        "updatedAt": "2023-03-01T15:40:10.863Z",
+        "comments": [
+            {
+                "_id": "61fghj8sler6ykaq",
+                "createdAtComment": "2023-03-02T14:17:55.778Z"
+            },
+            {
+                "_id": "61fghk74ler714d4",
+                "createdAtComment": "2023-03-02T14:19:55.095Z"
+            },
+            {
+                "_id": "61fgh8soler78p1g",
+                "createdAtComment": "2023-03-02T14:25:48.484Z"
+            }
+        ]
+    },
+    {
+        "category": "Fantastic",
+        "title": "fantastic beasts",
+        "cover": "https://picsum.photos/seed/picsum/200/300",
+        "readTime": {
+            "value": 2,
+            "unit": "5 hours"
+        },
+        "author": {
+            "name": "beasts",
+            "avatar": "https://ui-avatars.com/api/?background=0D8ABC&color=fff"
+        },
+        "content": "horror",
+        "_id": "61fgh8soler7a7l3",
+        "createdAt": "2023-03-02T14:26:59.175Z",
+        "updatedAt": "2023-03-02T14:26:59.175Z"
+    },
+    {
+        "category": "Fantastic",
+        "title": "fantastic beasts",
+        "cover": "https://picsum.photos/seed/picsum/200/300",
+        "readTime": {
+            "value": 2,
+            "unit": "5 hours"
+        },
+        "author": {
+            "name": "beasts",
+            "avatar": "https://ui-avatars.com/api/?background=0D8ABC&color=fff"
+        },
+        "content": "horror",
+        "_id": "61fghcssler7bgkl",
+        "createdAt": "2023-03-02T14:27:57.476Z",
+        "updatedAt": "2023-03-02T14:27:57.476Z"
+    },
+    {
+        "category": "Fantastic23",
+        "title": "fantastic beasts2",
+        "cover": "https://picsum.photos/seed/picsum/200/300",
+        "readTime": {
+            "value": 2,
+            "unit": "5 hours"
+        },
+        "author": {
+            "name": "beasts",
+            "avatar": "https://ui-avatars.com/api/?background=0D8ABC&color=fff"
+        },
+        "content": "horror",
+        "_id": "61fghcngler7c6k7",
+        "createdAt": "2023-03-02T14:28:31.158Z",
+        "updatedAt": "2023-03-02T14:28:31.158Z"
     }
 ]

@@ -10,7 +10,13 @@
 
 import Express from "express"; // 3RD PARTY MODULE (npm i express)
 import uniqid from "uniqid";
-import { getAuthors, writeAuthors } from "../../lib/fs-tools.js";
+import {
+  getAuthors,
+  saveAuthorsAvatars,
+  writeAuthors,
+} from "../../lib/fs-tools.js";
+import multer from "multer";
+import { extname } from "path";
 
 const authorsRouter = Express.Router(); // an Express Router is a set of similar endpoints grouped in the same collection
 

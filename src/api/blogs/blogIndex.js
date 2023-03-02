@@ -134,4 +134,50 @@ blogsRouter.delete("/:blogId", async (req, res, next) => {
   }
 });
 
+blogsRouter.post("/:blogId/comments", async (req, res, next) => {
+  try {
+    const blogsArray = await getBlogs();
+    const foundBlog = blogsArray.find((blog) => blog._id === req.params.blogId);
+    const { authorName, text } = req.body;
+    console.log("comments", authorName, text);
+    if (foundBlog) {
+      if (!foundBlog.comments) {
+        foundBlog.comments = [];
+      }
+      const newComment = {
+        authorName,
+        text,
+      };
+      console.log("newComment", newComment);
+      foundBlog.comments.push(newComment);
+      await writeBlogs(blogsArray);
+      res.status(201).send(blogsArray);
+    } else {
+      next(
+        createHttpError(404, `Blog with id ${req.params.blogId} not found!`)
+      ); //
+    }
+  } catch (error) {
+    next(error);
+  }
+});
+
+blogsRouter.get("/:blogId/comments", async (req, res, next) => {
+  try {
+    const blogsArray = await getBlogs();
+
+    const foundBlog = blogsArray.find((blog) => blog._id === req.params.blogId);
+    if (foundBlog) {
+      res.send(foundBlog);
+    } else {
+      // the blog has not been found, I'd like to trigger a 404 error
+      next(
+        createHttpError(404, `Blog with id ${req.params.blogId} not found!`)
+      ); // this jumps to the error handlers
+    }
+  } catch (error) {
+    next(error); // This error does not have a status code, it should trigger a 500
+  }
+});
+
 export default blogsRouter;

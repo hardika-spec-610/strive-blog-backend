@@ -10,9 +10,12 @@ import {
   unauthorizedHandler,
   notfoundHandler,
 } from "./errorsHandlers.js";
+import { join } from "path";
+import filesRouter from "./api/files/index.js";
 
 const server = Express();
 const port = 3001;
+const publicFolderPath = join(process.cwd(), "./public");
 
 // ************************** MIDDLEWARES *********************
 const loggerMiddleware = (req, res, next) => {
@@ -23,6 +26,7 @@ const loggerMiddleware = (req, res, next) => {
   next();
 };
 
+server.use(Express.static(publicFolderPath));
 server.use(cors());
 server.use(loggerMiddleware);
 server.use(Express.json()); // If you don't add this line BEFORE the endpoints all request bodies will be UNDEFINED!!!!!!!!!!!!!!!
@@ -30,6 +34,8 @@ server.use(Express.json()); // If you don't add this line BEFORE the endpoints a
 // ************************** ENDPOINTS ***********************
 server.use("/authors", authorsRouter);
 server.use("/blogPosts", blogsRouter);
+server.use("/authors", filesRouter);
+server.use("/blogPosts", filesRouter);
 
 server.listen(port, () => {
   console.table(listEndpoints(server));
