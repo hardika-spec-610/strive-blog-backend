@@ -34,12 +34,6 @@ const blogPostSchema = {
       },
     },
   },
-  // email: {
-  //   in: ["body"],
-  //   isEmail: {
-  //     errorMessage: "Email is a mandatory field and needs to be a valid email address!",
-  //   },
-  // },
 };
 
 export const checkBlogsSchema = checkSchema(blogPostSchema); // this function creates a middleware

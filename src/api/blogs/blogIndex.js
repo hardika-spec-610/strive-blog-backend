@@ -11,22 +11,12 @@
 */
 
 import Express from "express"; // 3RD PARTY MODULE (npm i express)
-import fs from "fs"; // CORE MODULE (no need to install it!!!!)
-import { fileURLToPath } from "url"; // CORE MODULE
-import { dirname, join } from "path"; // CORE MODULE
 import uniqid from "uniqid";
 import createHttpError from "http-errors";
 import { checkBlogsSchema, triggerBadRequest } from "./validation.js";
+import { getBlogs, writeBlogs } from "../../lib/fs-tools.js";
 
 const blogsRouter = Express.Router();
-
-const bolgsJSONPath = join(
-  dirname(fileURLToPath(import.meta.url)),
-  "blogs.json"
-);
-const getBlogs = () => JSON.parse(fs.readFileSync(bolgsJSONPath));
-const writeBlogs = (blogsArray) =>
-  fs.writeFileSync(bolgsJSONPath, JSON.stringify(blogsArray));
 
 blogsRouter.post(
   "/",
@@ -46,9 +36,9 @@ blogsRouter.post(
       updatedAt: new Date(),
     };
 
-    const blogsArray = getBlogs();
+    const blogsArray = await getBlogs();
     blogsArray.push(newBlog);
-    writeBlogs(blogsArray);
+    await writeBlogs(blogsArray);
     res.status(201).send(blogsArray);
   }
 );
@@ -56,13 +46,7 @@ blogsRouter.post(
 blogsRouter.get("/", async (req, res, next) => {
   try {
     // throw new Error("KABOOOOOOOOOOOOOOOOOOM!")
-    const blogs = getBlogs();
-    // if (req.query && req.query.category) {
-    //   const filteredBlogPost = blogs.filter(blog => blog.category === req.query.category)
-    //   res.send(filteredBlogPost)
-    // } else {
-    //   res.send(blogs)
-    // }
+    const blogs = await getBlogs();
     res.send(blogs);
   } catch (error) {
     next(createHttpError(500, `Server side error`));
@@ -71,7 +55,7 @@ blogsRouter.get("/", async (req, res, next) => {
 blogsRouter.get("/search", async (req, res, next) => {
   try {
     // throw new Error("KABOOOOOOOOOOOOOOOOOOM!")
-    const blogs = getBlogs();
+    const blogs = await getBlogs();
     if (req.query && req.query.title) {
       const filteredBlogPost = blogs.filter(
         (blog) => blog.title === req.query.title
@@ -87,13 +71,13 @@ blogsRouter.get("/search", async (req, res, next) => {
 
 blogsRouter.get("/:blogId", async (req, res, next) => {
   try {
-    const blogsArray = getBlogs();
+    const blogsArray = await getBlogs();
 
     const foundBlog = blogsArray.find((blog) => blog._id === req.params.blogId);
     if (foundBlog) {
       res.send(foundBlog);
     } else {
-      // the book has not been found, I'd like to trigger a 404 error
+      // the blog has not been found, I'd like to trigger a 404 error
       next(
         createHttpError(404, `Blog with id ${req.params.blogId} not found!`)
       ); // this jumps to the error handlers
@@ -105,7 +89,7 @@ blogsRouter.get("/:blogId", async (req, res, next) => {
 
 blogsRouter.put("/:blogId", async (req, res, next) => {
   try {
-    const blogsArray = getBlogs();
+    const blogsArray = await getBlogs();
 
     const index = blogsArray.findIndex(
       (blog) => blog._id === req.params.blogId
@@ -116,7 +100,7 @@ blogsRouter.put("/:blogId", async (req, res, next) => {
 
       blogsArray[index] = updatedBlog;
 
-      writeBlogs(blogsArray);
+      await writeBlogs(blogsArray);
 
       res.send(updatedBlog);
     } else {
@@ -131,14 +115,14 @@ blogsRouter.put("/:blogId", async (req, res, next) => {
 
 blogsRouter.delete("/:blogId", async (req, res, next) => {
   try {
-    const blogsArray = getBlogs();
+    const blogsArray = await getBlogs();
 
     const remainingBlogs = blogsArray.filter(
       (blog) => blog._id !== req.params.blogId
     );
 
     if (blogsArray.length !== remainingBlogs.length) {
-      writeBlogs(remainingBlogs);
+      await writeBlogs(remainingBlogs);
       res.status(204).send();
     } else {
       next(
