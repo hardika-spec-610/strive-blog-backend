@@ -20,7 +20,7 @@ const cloudinaryUploaderAvatar = multer({
   storage: new CloudinaryStorage({
     cloudinary, // cloudinary is going to search for smth in .env vars called process.env.CLOUDINARY_URL
     params: {
-      folder: "Blog post cover images/authors",
+      folder: "BlogPostAuthorImages/authors",
     },
   }),
 }).single("avatar");
@@ -28,7 +28,7 @@ const cloudinaryUploaderCover = multer({
   storage: new CloudinaryStorage({
     cloudinary, // cloudinary is going to search for smth in .env vars called process.env.CLOUDINARY_URL
     params: {
-      folder: "Blog post cover images/blogPosts",
+      folder: "BlogPostCoverImages/blogPosts",
     },
   }),
 }).single("cover");
@@ -42,9 +42,9 @@ filesRouter.post(
     try {
       console.log("FILE:", req.file);
       //   console.log("BODY:", req.body);
-      const originalFileExtension = extname(req.file.originalname);
-      const fileName = req.params.authorId + originalFileExtension;
-      await saveAuthorsAvatars(fileName, req.file.buffer);
+      // const originalFileExtension = extname(req.file.originalname);
+      // const fileName = req.params.authorId + originalFileExtension;
+      // await saveAuthorsAvatars(fileName, req.file.buffer);
       // Add an avatar field to the corresponding author in authors.json file, containing `http://localhost:3001/img/authors/${filename}`
       const authorsArray = await getAuthors();
       const index = authorsArray.findIndex(
@@ -73,10 +73,10 @@ filesRouter.post(
     // If they do not match, multer will not find any file
     try {
       console.log("FILE:", req.file);
-      const originalFileExtension = extname(req.file.originalname);
-      console.log("originalFileExtension:", originalFileExtension);
-      const fileName = req.params.blogId + originalFileExtension;
-      await saveBlogPostsCover(fileName, req.file.buffer);
+      // const originalFileExtension = extname(req.file.originalname);
+      // console.log("originalFileExtension:", originalFileExtension);
+      // const fileName = req.params.blogId + originalFileExtension;
+      // await saveBlogPostsCover(fileName, req.file.buffer);
       // Add an avatar field to the corresponding blog in blogs.json file, containing `http://localhost:3001/img/blogPosts/${filename}`
       const blogpostsArray = await getBlogs();
       const index = blogpostsArray.findIndex(
