@@ -165,9 +165,9 @@ blogsRouter.post(
         };
         blogsArray[index] = updated;
         await writeBlogs(blogsArray);
-        res.status(201).send({ id: req.params.uuid, newComment: newComment });
+        res.status(201).send({ id: req.params.blogId, newComment: newComment });
       } else {
-        next(createHttpError(404, `No blogpost with id ${req.params.uuid}`));
+        next(createHttpError(404, `No blogpost with id ${req.params.blogId}`));
       }
     } catch (error) {
       next(error);
