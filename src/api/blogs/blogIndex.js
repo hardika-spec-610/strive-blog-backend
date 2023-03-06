@@ -44,7 +44,8 @@ blogsRouter.post(
     const blogsArray = await getBlogs();
     blogsArray.push(newBlog);
     await writeBlogs(blogsArray);
-    res.status(201).send(blogsArray);
+    // res.status(201).send(blogsArray);
+    res.status(201).send({ id: newBlog._id });
   }
 );
 

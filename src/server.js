@@ -14,9 +14,9 @@ import { join } from "path";
 import filesRouter from "./api/files/index.js";
 
 const server = Express();
-const port = 3001;
+const port = process.env.PORT || 3001;
 const publicFolderPath = join(process.cwd(), "./public");
-
+console.log(process.env.SECRET);
 // ************************** MIDDLEWARES *********************
 const loggerMiddleware = (req, res, next) => {
   console.log(
@@ -26,8 +26,28 @@ const loggerMiddleware = (req, res, next) => {
   next();
 };
 
+const whitelist = [process.env.FE_DEV_URL, process.env.FE_PROD_URL];
+
 server.use(Express.static(publicFolderPath));
-server.use(cors());
+// server.use(cors());
+server.use(
+  cors({
+    origin: (currentOrigin, corsNext) => {
+      if (!currentOrigin || whitelist.indexOf(currentOrigin) !== -1) {
+        // origin is in the whitelist
+        corsNext(null, true);
+      } else {
+        // origin is not in the whitelist
+        corsNext(
+          createHttpError(
+            400,
+            `Origin ${currentOrigin} is not in the whitelist!`
+          )
+        );
+      }
+    },
+  })
+);
 server.use(loggerMiddleware);
 server.use(Express.json()); // If you don't add this line BEFORE the endpoints all request bodies will be UNDEFINED!!!!!!!!!!!!!!!
 
