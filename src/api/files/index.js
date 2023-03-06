@@ -46,19 +46,19 @@ filesRouter.post(
       // const fileName = req.params.authorId + originalFileExtension;
       // await saveAuthorsAvatars(fileName, req.file.buffer);
       // Add an avatar field to the corresponding author in authors.json file, containing `http://localhost:3001/img/authors/${filename}`
-      const authorsArray = await getAuthors();
-      const index = authorsArray.findIndex(
-        (author) => author.id === req.params.authorId
-      );
-      const oldAuthor = authorsArray[index];
-      const updatedAuthor = {
-        ...oldAuthor,
-        ...req.body,
-        avatar: `${apiUrl}/img/authors/${fileName}`,
-        updatedAt: new Date(),
-      };
-      authorsArray[index] = updatedAuthor;
-      await writeAuthors(authorsArray);
+      // const authorsArray = await getAuthors();
+      // const index = authorsArray.findIndex(
+      //   (author) => author.id === req.params.authorId
+      // );
+      // const oldAuthor = authorsArray[index];
+      // const updatedAuthor = {
+      //   ...oldAuthor,
+      //   ...req.body,
+      //   avatar: `${apiUrl}/img/authors/${fileName}`,
+      //   updatedAt: new Date(),
+      // };
+      // authorsArray[index] = updatedAuthor;
+      // await writeAuthors(authorsArray);
       res.send({ message: "file uploaded" });
     } catch (error) {
       next(error);
@@ -78,19 +78,19 @@ filesRouter.post(
       // const fileName = req.params.blogId + originalFileExtension;
       // await saveBlogPostsCover(fileName, req.file.buffer);
       // Add an avatar field to the corresponding blog in blogs.json file, containing `http://localhost:3001/img/blogPosts/${filename}`
-      const blogpostsArray = await getBlogs();
-      const index = blogpostsArray.findIndex(
-        (blogpost) => blogpost._id === req.params.blogId
-      );
-      const oldBlogpost = blogpostsArray[index];
-      const updatedBlogpost = {
-        ...oldBlogpost,
-        ...req.body,
-        cover: `${apiUrl}/img/blogposts/${fileName}`,
-        updatedAt: new Date(),
-      };
-      blogpostsArray[index] = updatedBlogpost;
-      await writeBlogs(blogpostsArray);
+      // const blogpostsArray = await getBlogs();
+      // const index = blogpostsArray.findIndex(
+      //   (blogpost) => blogpost._id === req.params.blogId
+      // );
+      // const oldBlogpost = blogpostsArray[index];
+      // const updatedBlogpost = {
+      //   ...oldBlogpost,
+      //   ...req.body,
+      //   cover: `${apiUrl}/img/blogposts/${fileName}`,
+      //   updatedAt: new Date(),
+      // };
+      // blogpostsArray[index] = updatedBlogpost;
+      // await writeBlogs(blogpostsArray);
       res.send({ message: "file uploaded" });
     } catch (error) {
       next(error);
