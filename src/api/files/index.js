@@ -9,12 +9,33 @@ import {
   getAuthors,
   writeAuthors,
 } from "../../lib/fs-tools.js";
+import { v2 as cloudinary } from "cloudinary";
+import { CloudinaryStorage } from "multer-storage-cloudinary";
 
 const filesRouter = Express.Router();
 
+const apiUrl = process.env.FE_DEV_URL;
+
+const cloudinaryUploaderAvatar = multer({
+  storage: new CloudinaryStorage({
+    cloudinary, // cloudinary is going to search for smth in .env vars called process.env.CLOUDINARY_URL
+    params: {
+      folder: "Blog post cover images/authors",
+    },
+  }),
+}).single("avatar");
+const cloudinaryUploaderCover = multer({
+  storage: new CloudinaryStorage({
+    cloudinary, // cloudinary is going to search for smth in .env vars called process.env.CLOUDINARY_URL
+    params: {
+      folder: "Blog post cover images/blogPosts",
+    },
+  }),
+}).single("cover");
+
 filesRouter.post(
   "/:authorId/uploadAvatar",
-  multer().single("avatar"),
+  cloudinaryUploaderAvatar,
   async (req, res, next) => {
     // "avatar" here needs to match exactly to the name of the field appended to the FormData object in the FE (or in Postman req body)
     // If they do not match, multer will not find any file
@@ -33,7 +54,7 @@ filesRouter.post(
       const updatedAuthor = {
         ...oldAuthor,
         ...req.body,
-        avatar: `http://localhost:3001/img/authors/${fileName}`,
+        avatar: `${apiUrl}/img/authors/${fileName}`,
         updatedAt: new Date(),
       };
       authorsArray[index] = updatedAuthor;
@@ -46,7 +67,7 @@ filesRouter.post(
 );
 filesRouter.post(
   "/:blogId/uploadCover",
-  multer().single("cover"),
+  cloudinaryUploaderCover,
   async (req, res, next) => {
     // "avatar" here needs to match exactly to the name of the field appended to the FormData object in the FE (or in Postman req body)
     // If they do not match, multer will not find any file
@@ -65,7 +86,7 @@ filesRouter.post(
       const updatedBlogpost = {
         ...oldBlogpost,
         ...req.body,
-        cover: `http://localhost:3001/img/blogposts/${fileName}`,
+        cover: `${apiUrl}/img/blogposts/${fileName}`,
         updatedAt: new Date(),
       };
       blogpostsArray[index] = updatedBlogpost;
