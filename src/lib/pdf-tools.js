@@ -4,14 +4,6 @@ import imageToBase64 from "image-to-base64";
 //or
 //import imageToBase64 from 'image-to-base64/browser';
 // Path to the image
-const imageToBase64Fun = async (url) => {
-  try {
-    let image = await imageToBase64(url); //"cGF0aC90by9maWxlLmpwZw=="
-    return image;
-  } catch (error) {
-    console.log(error);
-  }
-};
 
 export const getPDFReadableStream = async (blogPosts) => {
   // Define font files
@@ -24,7 +16,15 @@ export const getPDFReadableStream = async (blogPosts) => {
     },
   };
   const printer = new PdfPrinter(fonts);
-
+  //   const imageToBase64Encoded = async (url) => {
+  //     try {
+  //       let image = await imageToBase64(url); //"cGF0aC90by9maWxlLmpwZw=="
+  //       return image;
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
+  const imageToBase64Encoded = await imageToBase64(blogPosts.cover);
   const docDefinition = {
     content: [
       {
@@ -39,7 +39,7 @@ export const getPDFReadableStream = async (blogPosts) => {
             ["Blog image", "Blog details"],
             [
               {
-                text: "blog image",
+                image: `data:image/jpeg;base64,${imageToBase64Encoded}`,
                 width: 250,
                 height: 250,
               },
