@@ -11,6 +11,7 @@ import {
 } from "../../lib/fs-tools.js";
 import { v2 as cloudinary } from "cloudinary";
 import { CloudinaryStorage } from "multer-storage-cloudinary";
+import { getPDFReadableStream } from "../../lib/pdf-tools.js";
 
 const filesRouter = Express.Router();
 
@@ -83,6 +84,12 @@ filesRouter.post(
       const index = blogpostsArray.findIndex(
         (blogpost) => blogpost._id === req.params.blogId
       );
+      if (index === -1) {
+        res
+          .status(404)
+          .send({ message: `Blog with ${req.params.blogId} is not found!` });
+        return;
+      }
       const oldBlogpost = blogpostsArray[index];
       const updatedBlogpost = {
         ...oldBlogpost,
@@ -99,5 +106,31 @@ filesRouter.post(
     }
   }
 );
+
+filesRouter.get("/:blogId/pdf", async (req, res, next) => {
+  try {
+    // res.setHeader("Content-Disposition", "attachment; filename=blog.pdf"); // Without this header the browser will try to open (not save) the file.
+    res.setHeader("Content-Type", "application/pdf"); // Without this header the browser will try to open (not save) the file.
+    // This header will tell the browser to open the "save file as" dialog
+    // SOURCE (READABLE STREAM pdfmake) --> DESTINATION (WRITABLE STREAM http response)
+    const blogpostsArray = await getBlogs();
+    const index = blogpostsArray.findIndex(
+      (blogpost) => blogpost._id === req.params.blogId
+    );
+    if (index === -1) {
+      res.status(404).send("blog is not found");
+    }
+    const blog = blogs[blogIndex];
+    const source = getPDFReadableStream(blog);
+    const destination = res;
+
+    pipeline(source, destination, (err) => {
+      if (err) console.log(err);
+      source.end();
+    });
+  } catch (error) {
+    next(error);
+  }
+});
 
 export default filesRouter;
