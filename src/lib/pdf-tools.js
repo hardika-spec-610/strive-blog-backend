@@ -30,37 +30,64 @@ export const getPDFReadableStream = (blogPosts) => {
       {
         text: "Blog post details",
         style: "header",
+        margin: 20,
       },
       {
-        alignment: "justify",
-        columns: [
-          //   {
-          //     image: `data:image/jpeg;base64,${imageToBase64Fun(
-          //       blogPosts.cover
-          //     )}`,
-          //     width: 250,
-          //     height: 250,
-          //   },
-
-          {
-            text: "blog image",
-            width: 250,
-            height: 250,
-          },
-          {
-            text: `${blogPosts.title}`,
-            style: "subheader",
-          },
-          {
-            type: "none",
-            ol: [
-              `Category: ${blogPosts.category}`,
-              `Readtime: ${blogPosts.readTime.value} ${blogPosts.readTime.unit}`,
-              `Author: ${blogPosts.author.name}`,
+        style: "tableExample",
+        table: {
+          body: [
+            ["Blog image", "Blog details"],
+            [
+              {
+                text: "blog image",
+                width: 250,
+                height: 250,
+              },
+              {
+                type: "none",
+                ol: [
+                  `Category: ${blogPosts.category}`,
+                  `Readtime: ${blogPosts.readTime.value} ${blogPosts.readTime.unit}`,
+                  `Author: ${blogPosts.author.name}`,
+                ],
+                style: "subheader",
+              },
             ],
-          },
-        ],
+          ],
+        },
       },
+      //   {
+      //     alignment: "justify",
+      //     columns: [
+      //       //   {
+      //       //     image: `data:image/jpeg;base64,${imageToBase64Fun(
+      //       //       blogPosts.cover
+      //       //     )}`,
+      //       //     width: 250,
+      //       //     height: 250,
+      //       //   },
+
+      //       {
+      //         text: "blog image",
+      //         width: 250,
+      //         height: 250,
+      //       },
+      //       {
+      //         text: `${blogPosts.title}`,
+      //         style: "subheader",
+      //         margin: 20,
+      //       },
+      //       {
+      //         type: "none",
+      //         ol: [
+      //           `Category: ${blogPosts.category}`,
+      //           `Readtime: ${blogPosts.readTime.value} ${blogPosts.readTime.unit}`,
+      //           `Author: ${blogPosts.author.name}`,
+      //         ],
+      //         style: "subheader",
+      //       },
+      //     ],
+      //   },
     ],
     defaultStyle: {
       font: "Helvetica",
@@ -73,6 +100,9 @@ export const getPDFReadableStream = (blogPosts) => {
       subheader: {
         fontSize: 15,
         bold: true,
+      },
+      tableExample: {
+        margin: [0, 5, 0, 15],
       },
     },
   };
