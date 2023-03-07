@@ -120,7 +120,7 @@ filesRouter.get("/:blogId/pdf", async (req, res, next) => {
     if (index === -1) {
       res.status(404).send("blog is not found");
     }
-    const blog = blogpostsArray[blogIndex];
+    const blog = blogpostsArray[index];
     const source = getPDFReadableStream(blog);
     const destination = res;
 
