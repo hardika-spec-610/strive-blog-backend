@@ -13,7 +13,39 @@ export const getPDFReadableStream = (blogPosts) => {
   const printer = new PdfPrinter(fonts);
 
   const docDefinition = {
-    content: [blogPosts.title, blogPosts.author.name],
+    content: [
+      {
+        text: "Blog post details",
+        style: "header",
+      },
+      {
+        alignment: "justify",
+        columns: [
+          {
+            image: `${blogPosts.cover}`,
+            width: 180,
+            height: 180,
+          },
+          {
+            text: `${blogPosts.title}`,
+            style: "subheader",
+          },
+          {
+            type: "none",
+            ol: [
+              `Category: ${blogPosts.category}`,
+              `Readtime: ${blogPosts.readTime.value} ${blogPosts.readTime.unit}`,
+              `Author: ${blogPosts.author.name}`,
+            ],
+          },
+        ],
+      },
+
+      //   {
+      //     text: "Comments",
+      //     style: "subheader",
+      //   },
+    ],
     defaultStyle: {
       font: "Helvetica",
     },
