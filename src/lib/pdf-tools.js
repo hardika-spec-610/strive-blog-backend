@@ -23,8 +23,8 @@ export const getPDFReadableStream = (blogPosts) => {
         columns: [
           {
             image: `${blogPosts.cover}`,
-            width: 180,
-            height: 180,
+            width: 250,
+            height: 250,
           },
           {
             text: `${blogPosts.title}`,
