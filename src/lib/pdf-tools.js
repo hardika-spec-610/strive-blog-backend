@@ -34,13 +34,13 @@ export const getPDFReadableStream = (blogPosts) => {
       {
         alignment: "justify",
         columns: [
-          {
-            image: `data:image/jpeg;base64,${imageToBase64Fun(
-              blogPosts.cover
-            )}`,
-            width: 250,
-            height: 250,
-          },
+          //   {
+          //     image: `data:image/jpeg;base64,${imageToBase64Fun(
+          //       blogPosts.cover
+          //     )}`,
+          //     width: 250,
+          //     height: 250,
+          //   },
           {
             text: `${blogPosts.title}`,
             style: "subheader",
