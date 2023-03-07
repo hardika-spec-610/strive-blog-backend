@@ -110,25 +110,33 @@ filesRouter.post(
 
 filesRouter.get("/:blogId/pdf", async (req, res, next) => {
   try {
-    res.setHeader("Content-Disposition", "attachment; filename=blog.pdf"); // Without this header the browser will try to open (not save) the file.
+    // res.setHeader("Content-Disposition", "attachment; filename=blog.pdf"); // Without this header the browser will try to open (not save) the file.
     // res.setHeader("Content-Type", "application/pdf"); // Without this header the browser will try to open (not save) the file.
     // This header will tell the browser to open the "save file as" dialog
     // SOURCE (READABLE STREAM pdfmake) --> DESTINATION (WRITABLE STREAM http response)
     const blogpostsArray = await getBlogs();
-    const index = blogpostsArray.findIndex(
-      (blogpost) => blogpost._id === req.params.blogId
-    );
-    if (index === -1) {
+    // const index = blogpostsArray.findIndex(
+    //   (blogpost) => blogpost._id === req.params.blogId
+    // );
+    // if (index === -1) {
+    //   res.status(404).send("blog is not found");
+    // }
+    const foundBlog = blogpostsArray.find((b) => b._id === req.params.blogId);
+    if (foundBlog) {
+      res.setHeader(
+        "Content-Disposition",
+        `attachment; filename=${foundBlog.title}.pdf`
+      );
+      const source = await getPDFReadableStream(foundBlog);
+      const destination = res;
+      pipeline(source, destination, (err) => {
+        if (err) console.log(err);
+        source.end();
+      });
+    } else {
       res.status(404).send("blog is not found");
     }
-    const blog = blogpostsArray[index];
-    const source = getPDFReadableStream(blog);
-    const destination = res;
-
-    pipeline(source, destination, (err) => {
-      if (err) console.log(err);
-      source.end();
-    });
+    // const blog = blogpostsArray[index];
   } catch (error) {
     next(error);
   }

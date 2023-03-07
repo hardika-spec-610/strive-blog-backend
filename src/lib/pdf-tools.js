@@ -13,7 +13,7 @@ const imageToBase64Fun = async (url) => {
   }
 };
 
-export const getPDFReadableStream = (blogPosts) => {
+export const getPDFReadableStream = async (blogPosts) => {
   // Define font files
   const fonts = {
     Helvetica: {
@@ -30,7 +30,7 @@ export const getPDFReadableStream = (blogPosts) => {
       {
         text: "Blog post details",
         style: "header",
-        margin: 20,
+        margin: [0, 5, 0, 15],
       },
       {
         style: "tableExample",
@@ -46,6 +46,7 @@ export const getPDFReadableStream = (blogPosts) => {
               {
                 type: "none",
                 ol: [
+                  `${blogPosts.title}`,
                   `Category: ${blogPosts.category}`,
                   `Readtime: ${blogPosts.readTime.value} ${blogPosts.readTime.unit}`,
                   `Author: ${blogPosts.author.name}`,
@@ -56,38 +57,6 @@ export const getPDFReadableStream = (blogPosts) => {
           ],
         },
       },
-      //   {
-      //     alignment: "justify",
-      //     columns: [
-      //       //   {
-      //       //     image: `data:image/jpeg;base64,${imageToBase64Fun(
-      //       //       blogPosts.cover
-      //       //     )}`,
-      //       //     width: 250,
-      //       //     height: 250,
-      //       //   },
-
-      //       {
-      //         text: "blog image",
-      //         width: 250,
-      //         height: 250,
-      //       },
-      //       {
-      //         text: `${blogPosts.title}`,
-      //         style: "subheader",
-      //         margin: 20,
-      //       },
-      //       {
-      //         type: "none",
-      //         ol: [
-      //           `Category: ${blogPosts.category}`,
-      //           `Readtime: ${blogPosts.readTime.value} ${blogPosts.readTime.unit}`,
-      //           `Author: ${blogPosts.author.name}`,
-      //         ],
-      //         style: "subheader",
-      //       },
-      //     ],
-      //   },
     ],
     defaultStyle: {
       font: "Helvetica",
@@ -99,7 +68,6 @@ export const getPDFReadableStream = (blogPosts) => {
       },
       subheader: {
         fontSize: 15,
-        bold: true,
       },
       tableExample: {
         margin: [0, 5, 0, 15],
