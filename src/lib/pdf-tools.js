@@ -41,6 +41,12 @@ export const getPDFReadableStream = (blogPosts) => {
           //     width: 250,
           //     height: 250,
           //   },
+
+          {
+            text: "blog image",
+            width: 250,
+            height: 250,
+          },
           {
             text: `${blogPosts.title}`,
             style: "subheader",
@@ -55,14 +61,19 @@ export const getPDFReadableStream = (blogPosts) => {
           },
         ],
       },
-
-      //   {
-      //     text: "Comments",
-      //     style: "subheader",
-      //   },
     ],
     defaultStyle: {
       font: "Helvetica",
+    },
+    styles: {
+      header: {
+        fontSize: 20,
+        bold: true,
+      },
+      subheader: {
+        fontSize: 15,
+        bold: true,
+      },
     },
   };
 
