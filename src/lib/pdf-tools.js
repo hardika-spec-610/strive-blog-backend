@@ -4,7 +4,7 @@ import imageToBase64 from "image-to-base64";
 //or
 //import imageToBase64 from 'image-to-base64/browser';
 // Path to the image
-const imageToBase64 = async (url) => {
+const imageToBase64Fun = async (url) => {
   try {
     let image = await imageToBase64(url); //"cGF0aC90by9maWxlLmpwZw=="
     return image;
@@ -35,7 +35,9 @@ export const getPDFReadableStream = (blogPosts) => {
         alignment: "justify",
         columns: [
           {
-            image: `data:image/jpeg;base64,${imageToBase64(blogPosts.cover)}`,
+            image: `data:image/jpeg;base64,${imageToBase64Fun(
+              blogPosts.cover
+            )}`,
             width: 250,
             height: 250,
           },
