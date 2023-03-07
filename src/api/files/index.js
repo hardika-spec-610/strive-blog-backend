@@ -110,8 +110,8 @@ filesRouter.post(
 
 filesRouter.get("/:blogId/pdf", async (req, res, next) => {
   try {
-    // res.setHeader("Content-Disposition", "attachment; filename=blog.pdf"); // Without this header the browser will try to open (not save) the file.
-    res.setHeader("Content-Type", "application/pdf"); // Without this header the browser will try to open (not save) the file.
+    res.setHeader("Content-Disposition", "attachment; filename=blog.pdf"); // Without this header the browser will try to open (not save) the file.
+    // res.setHeader("Content-Type", "application/pdf"); // Without this header the browser will try to open (not save) the file.
     // This header will tell the browser to open the "save file as" dialog
     // SOURCE (READABLE STREAM pdfmake) --> DESTINATION (WRITABLE STREAM http response)
     const blogpostsArray = await getBlogs();
