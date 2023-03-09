@@ -20,6 +20,9 @@ import {
 } from "./validation.js";
 import { getBlogs, writeBlogs } from "../../lib/fs-tools.js";
 import { sendsEmailWhenCreateNewBlogPost } from "../../lib/email-tools.js";
+import sgMail from "@sendgrid/mail";
+
+sgMail.setApiKey(process.env.SENDGRID_KEY);
 
 const blogsRouter = Express.Router();
 
@@ -46,6 +49,7 @@ blogsRouter.post(
     blogsArray.push(newBlog);
     await writeBlogs(blogsArray);
     // res.status(201).send(blogsArray);
+    await sendsEmailWhenCreateNewBlogPost("hardika.moradiya1996@gmail.com");
     res.status(201).send({ id: newBlog._id });
   }
 );
@@ -195,7 +199,7 @@ blogsRouter.get("/:blogId/comments", async (req, res, next) => {
 
 blogsRouter.post("/register", async (req, res, next) => {
   try {
-    // 1. Receive user's data in req.body
+    // 1. Receive user's data in req.body?
     const { email } = req.body; // to:
     // 2. Save him/her in db
     // 3. Send email to new user

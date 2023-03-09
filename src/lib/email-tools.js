@@ -7,8 +7,16 @@ export const sendsEmailWhenCreateNewBlogPost = async (recipientAdress) => {
     to: recipientAdress,
     from: { name: "Hardika Moradiya", email: process.env.SENDER_EMAIL_ADDRESS },
     subject: "New posted blog",
-    text: "bla bla bla",
-    html: "<strong>bla bla bla but in bold</strong>",
+    text: "Hi, a new blog post has been created.",
+    html: "<p>Hi, a new blog post has been created.</p>",
+    // attachments:[
+    //     {
+    //         content:attachments,
+    //         filename:"newBlogPost.pdf",
+    //         type:"application/pdf",
+    //         disposition:"attachment"
+    //     }
+    // ]
   };
   await sgMail.send(msg);
 };

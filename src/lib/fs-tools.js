@@ -33,6 +33,3 @@ export const getPDFWritableStream = (filename) =>
 
 export const getPDFWritableCSVStream = (filename) =>
   createWriteStream(join(dataFolderPath, filename));
-
-export const getAuthorsJSONReadableStreamPDF = () =>
-  createReadStream(authorJSONPath);
