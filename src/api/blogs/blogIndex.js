@@ -19,6 +19,7 @@ import {
   checkCommentSchema,
 } from "./validation.js";
 import { getBlogs, writeBlogs } from "../../lib/fs-tools.js";
+import { sendsEmailWhenCreateNewBlogPost } from "../../lib/email-tools.js";
 
 const blogsRouter = Express.Router();
 
@@ -189,6 +190,19 @@ blogsRouter.get("/:blogId/comments", async (req, res, next) => {
     }
   } catch (error) {
     next(error); // This error does not have a status code, it should trigger a 500
+  }
+});
+
+blogsRouter.post("/register", async (req, res, next) => {
+  try {
+    // 1. Receive user's data in req.body
+    const { email } = req.body; // to:
+    // 2. Save him/her in db
+    // 3. Send email to new user
+    await sendsEmailWhenCreateNewBlogPost(email);
+    res.send("Successfully sended mail");
+  } catch (error) {
+    next(error);
   }
 });
 

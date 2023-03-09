@@ -17,6 +17,7 @@ import {
 } from "../../lib/fs-tools.js";
 import multer from "multer";
 import { extname } from "path";
+import { getAuthorsPDFReadableStream } from "../../lib/pdf-tools.js";
 
 const authorsRouter = Express.Router(); // an Express Router is a set of similar endpoints grouped in the same collection
 
@@ -115,5 +116,21 @@ authorsRouter.delete("/:authorId", async (req, res) => {
   // 4. Send back a proper response
   res.status(204).send();
 });
+
+// authorsRouter.get("/asyncPDF", async (req, res, next) => {
+//   try {
+//     res.setHeader("Content-Disposition", "attachment; filename=authors.pdf");
+//     const authors = await getAuthors();
+//     console.log("authors", authors);
+//     const source = await getAuthorsPDFReadableStream(authors);
+//     const destination = res;
+//     pipeline(source, destination, (err) => {
+//       if (err) console.log(err);
+//       source.end();
+//     });
+//   } catch (error) {
+//     next(error);
+//   }
+// });
 
 export default authorsRouter;

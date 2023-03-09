@@ -8,11 +8,19 @@ import {
   writeBlogs,
   getAuthors,
   writeAuthors,
+  getAuthorsJSONReadableStream,
+  getPDFWritableCSVStream,
 } from "../../lib/fs-tools.js";
 import { v2 as cloudinary } from "cloudinary";
 import { CloudinaryStorage } from "multer-storage-cloudinary";
-import { getPDFReadableStream } from "../../lib/pdf-tools.js";
+import {
+  asyncPDFGenerationAuthors,
+  getAuthorsPDFReadableStream,
+  getPDFReadableStream,
+} from "../../lib/pdf-tools.js";
 import { pipeline } from "stream";
+import { Transform } from "@json2csv/node";
+import fs from "fs-extra";
 
 const filesRouter = Express.Router();
 
@@ -137,6 +145,56 @@ filesRouter.get("/:blogId/pdf", async (req, res, next) => {
       res.status(404).send("blog is not found");
     }
     // const blog = blogpostsArray[index];
+  } catch (error) {
+    next(error);
+  }
+});
+filesRouter.get("/:authorId/asyncPDF", async (req, res, next) => {
+  try {
+    const authors = await getAuthors();
+    const foundAuthor = authors.find((b) => b.id === req.params.authorId);
+    if (foundAuthor) {
+      res.setHeader(
+        "Content-Disposition",
+        `attachment; filename=${foundAuthor.name}.pdf`
+      );
+      const source = await getAuthorsPDFReadableStream(foundAuthor);
+      const destination = res;
+      pipeline(source, destination, (err) => {
+        if (err) console.log(err);
+        source.end();
+      });
+    } else {
+      res.status(404).send("blog is not found");
+    }
+  } catch (error) {
+    next(error);
+  }
+});
+
+// filesRouter.get("/asyncPDF", async (req, res, next) => {
+//   try {
+//     const authors = await getAuthors();
+//     await getAuthorsPDFReadableStream(authors);
+//     // await sendPDFViaEmail()
+//     res.send({ message: "PDF GENERATED CORRECTLY" });
+//   } catch (error) {
+//     next(error);
+//   }
+// });
+
+filesRouter.get("/:authorId/csv", (req, res, next) => {
+  try {
+    res.setHeader("Content-Disposition", "attachment; filename=authors.csv");
+    const source = getAuthorsJSONReadableStream();
+    const transform = new Transform({
+      fields: ["name", "surname", "email", "DOB", "createdAt"],
+    });
+    const destination = res;
+    // const destination = getPDFWritableCSVStream("authorCSV.csv");
+    pipeline(source, transform, destination, (err) => {
+      if (err) console.log(err);
+    });
   } catch (error) {
     next(error);
   }

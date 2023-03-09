@@ -2,7 +2,8 @@ import fs from "fs-extra";
 import { fileURLToPath } from "url";
 import { dirname, join } from "path";
 
-const { readJSON, writeJSON, writeFile } = fs;
+const { readJSON, writeJSON, writeFile, createReadStream, createWriteStream } =
+  fs;
 
 const dataFolderPath = join(dirname(fileURLToPath(import.meta.url)), "../data"); // D:\Work\Epicode\2022\EN\BE-Master-04\U4\epicode-u4-d4-4\src\data
 const authorJSONPath = join(dataFolderPath, "authors.json");
@@ -21,3 +22,17 @@ export const saveAuthorsAvatars = (fileName, fileContentAsBuffer) =>
 
 export const saveBlogPostsCover = (fileName, fileContentAsBuffer) =>
   writeFile(join(usersPublicFolderBlogPath, fileName), fileContentAsBuffer);
+
+// export const getBlogsJSONReadableStream = () => createReadStream(bolgsJSONPath);
+// export const getPDFWritableStream = (filename) =>
+//   createWriteStream(join(dataFolderPath, filename));
+export const getAuthorsJSONReadableStream = () =>
+  createReadStream(authorJSONPath);
+export const getPDFWritableStream = (filename) =>
+  createWriteStream(join(dataFolderPath, filename));
+
+export const getPDFWritableCSVStream = (filename) =>
+  createWriteStream(join(dataFolderPath, filename));
+
+export const getAuthorsJSONReadableStreamPDF = () =>
+  createReadStream(authorJSONPath);
